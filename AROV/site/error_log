@@ -1,0 +1,23 @@
+[10-Apr-2014 16:40:37 America/Denver] PHP Warning:  imagettfbbox(): Could not find/open font in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Text.php on line 106
+[10-Apr-2014 16:40:37 America/Denver] PHP Warning:  imagecreatetruecolor(): Invalid image dimensions in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 404
+[10-Apr-2014 16:40:37 America/Denver] PHP Warning:  imagesavealpha() expects parameter 1 to be resource, boolean given in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 406
+[10-Apr-2014 16:40:37 America/Denver] PHP Warning:  imagealphablending() expects parameter 1 to be resource, boolean given in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 407
+[10-Apr-2014 16:40:37 America/Denver] PHP Warning:  imagecolorallocatealpha() expects parameter 1 to be resource, boolean given in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 410
+[10-Apr-2014 16:40:37 America/Denver] PHP Warning:  imagefill() expects parameter 1 to be resource, boolean given in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 411
+[10-Apr-2014 16:40:37 America/Denver] PHP Notice:  Undefined variable: witdh in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 761
+[10-Apr-2014 16:40:37 America/Denver] PHP Fatal error:  Cannot access empty property in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 761
+[10-Apr-2014 16:45:21 America/Denver] PHP Notice:  Undefined property: Text::$witdh in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 761
+[10-Apr-2014 16:46:19 America/Denver] PHP Notice:  Undefined property: Text::$witdh in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 761
+[10-Apr-2014 16:47:26 America/Denver] PHP Notice:  Undefined property: Text::$witdh in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 761
+[10-Apr-2014 16:47:59 America/Denver] PHP Notice:  Undefined property: Text::$witdh in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 761
+[10-Apr-2014 16:49:09 America/Denver] PHP Notice:  Undefined property: Text::$witdh in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 761
+[10-Apr-2014 16:50:26 America/Denver] PHP Notice:  Undefined property: Text::$witdh in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 761
+[10-Apr-2014 16:54:18 America/Denver] PHP Notice:  Undefined property: Text::$witdh in /home4/arovmbco/public_html/iconframework/GraphicsEngine/Frame.php on line 762
+[13-Apr-2014 12:55:23 America/Denver] PHP Notice:  Undefined index: permissions in /home4/arovmbco/public_html/site/admins.php on line 118
+[27-Apr-2014 13:23:19 America/Denver] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/arovmbco/public_html/site/campus.php:128) in /home4/arovmbco/public_html/site/campus.php on line 171
+[27-Apr-2014 15:39:45 America/Denver] PHP Notice:  Undefined index: time in /home4/arovmbco/public_html/site/events.php on line 133
+[27-Apr-2014 15:42:33 America/Denver] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/arovmbco/public_html/site/events.php:127) in /home4/arovmbco/public_html/site/events.php on line 157
+[27-Apr-2014 15:47:08 America/Denver] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/arovmbco/public_html/site/events.php:127) in /home4/arovmbco/public_html/site/events.php on line 157
+[27-Apr-2014 15:48:06 America/Denver] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/arovmbco/public_html/site/events.php:127) in /home4/arovmbco/public_html/site/events.php on line 207
+[27-Apr-2014 16:28:07 America/Denver] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home4/arovmbco/public_html/site/campus.php:128) in /home4/arovmbco/public_html/site/campus.php on line 171
+[28-Apr-2014 18:43:19 America/Denver] PHP Notice:  Undefined index: permissions in /home4/arovmbco/public_html/site/events.php on line 107

@@ -1,0 +1,68 @@
+/*************************************************
+ * Name: index.css
+ * Website: AROV CMS [Login Page]
+ * URL: http://hosting.otterlabs.edu/classes/melanomoises/arov/index.php
+ * Authors: Moises Melano, Joshua Frea, Juan Hernandez
+ * Email: mmelano@csumb.edu
+ *************************************************/
+
+@charset "utf-8";
+
+/* Compound Rules */
+* {
+	background: transparent;
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	background-color: #153455;
+	height: 100%;
+	width: 100%;
+}
+
+p, h1, h2 {
+	color: #FFFFFF;
+	font-family: "Times New Roman", Times, serif;
+}
+
+h2 {
+	margin-bottom: 15px;
+}
+
+a {
+	text-decoration: none;
+	color: #153455;
+}
+
+a:hover {
+	color: #F60;
+	cursor: pointer;
+}
+
+/* Class Rules */
+.container {
+	height: inherit;
+	width: 900px;
+	margin: auto;
+}
+
+/* Center Content Rules */
+.center {
+	min-height:100px;
+	width: 900px;
+	margin: 0 auto 25px;
+	text-align: center;
+}
+
+/* Footer Rules */
+#footer {
+	background: #E4B786;
+	height: 25px;
+	margin-top: -25px;
+	text-align: right;	
+}
+
+#footer p {
+	color: #153455;	
+}

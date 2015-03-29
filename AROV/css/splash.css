@@ -1,0 +1,118 @@
+/*************************************************
+ * Name: splash.css
+ * Website: AROV CMS [Splash Page]
+ * URL: http://hosting.otterlabs.edu/classes/melanomoises/arov/site/splash.php
+ * Authors: Moises Melano, Joshua Frea, Juan Hernandez
+ * Email: mmelano@csumb.edu
+ *************************************************/
+
+@charset "utf-8";
+* {
+	background: transparent;
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	background-color: #153455;
+	height: 100%;
+	width: 100%;
+}
+
+p, h1, h2 {
+	color: #FFFFFF;
+	font-family: "Times New Roman", Times, serif;
+}
+
+/* Class Rules */
+.clear {
+	clear: both;
+}
+
+.container {
+	background: transparent;
+	height: inherit;
+	width: 900px;
+	margin: auto;
+}
+
+/* Wrapper Rules */
+#wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -25px;
+}
+
+.center {
+	margin: 0 auto 25px;
+	vertical-align: middle;
+}
+
+.row {
+	height: 200px;
+	width: inherit;
+}
+
+/* Image Rules */
+.image {
+	height: inherit;
+	width: 200px;
+	position: relative;
+	float: left;
+	margin: 0 0 25px 25px;
+	box-shadow: 0 0 10px #000;
+	-moz-box-shadow: 0 0 10px #000;
+	-webkit-box-shadow: 0 0 10px #000;
+	border-radius: 25px;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+}
+
+.image h2 {
+	position: absolute;
+	top: 155px;
+	left: 0;
+	font-size: 18px;
+}
+
+.image h2 span {
+	color: #FFFFFF;
+	background: rgba(0,0,0,0.35);
+	padding: 2px 5px;
+	float: left;	
+}
+
+.triangle {
+	width: 0;
+	height: 0;
+	border-bottom: 25px solid rgba(0,0,0,0.35);
+	border-right: 50px solid transparent;	
+	float: left;
+}
+
+.fade {
+	opacity: 0.3;
+	transition: opacity .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out;
+	-webkit-transition: opacity .5s ease-in-out;	
+}
+
+.fadein {
+	opacity: 1;
+	transition: opacity .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out;
+	-webkit-transition: opacity .5s ease-in-out;	
+}
+
+/* Footer Rules */
+#footer {
+	height: 25px;
+	background: #E4B786;
+	margin-top: -25px;
+	text-align: right;
+}
+
+#footer p {
+	color: #153455;	
+}

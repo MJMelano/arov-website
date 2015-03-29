@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AROV - Directions</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+
+    <style>
+      html, body, #map-canvas {
+        background-color: #07607A;
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+      .heading {
+        text-align:left;
+        margin: 1px;
+        color: #ffffff;
+        padding: 3px 10px;
+        cursor: pointer;
+        position: relative;
+        background-color:#777777;
+        border:1px solid #07607A;
+        border-radius:0px;
+        font-size:18px;
+        text-shadow: 1px 1px #000;
+
+      }
+      .container {
+        padding: 5px 10px;
+        background-color:#fafafa;
+      }
+      .content{
+        position:absolute; top:40px;
+        right:0%;width:29.5%; height:0px;
+      }
+      p { padding: 5px 0; }
+      .title
+      {
+        height:20px;
+        width:98.23%;
+        background-color:#07607A;
+        padding:10px;" 
+        font-size: 24px;
+        color:#ffffff;
+        text-shadow: 1px 1px #000;
+      }
+
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=drawing"></script>
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+  </head>
+  <body>
+    <div class="title" id="header">&nbsp;&nbsp;<b>AROV - Directions</b></div>
+    <div id="map-canvas"></div>
+    <div class="content">
+      <p class="heading">Saved Paths</p>
+      <div class="container" style="display:none;" id="saved-paths-table">
+          <div style="overflow:scroll;overflow-x:hidden;max-height:500px;">
+            <table class="saved" id="database-table">
+             
+              <tr>
+                <th style="width:62px;">From</th>
+                <th style="width:62px;">To</th>
+                <th style="width:62px;">Weight</th>
+                <th style="width:70px;">Path<br><font size="1">(show/hide)</font></th>
+                <th style="width:60px;">Delete</th>
+                <th style="width:20px;"></th>
+              </tr>
+             </table> 
+          </div>
+          <div style="position:relative;bottom:0%;height:40px;">
+            
+          <br><button style="position:absolute;right:60%;" id="json">Save Graph to Json</button> 
+          <button style="position:absolute;right:10%;" id="delete">Delete</button> 
+
+          </div>
+      </div>
+      <p class="heading">Un-Saved Paths</p>
+      <div class="container"   style="display:none;" id="unsaved-paths-table">
+        <div style="overflow:scroll;overflow-x:hidden;max-height:500px;">
+        <table class="unsaved" id="unsaved-table">
+          <tr>
+            <th style="width:62px;">From</th>
+            <th style="width:62px;">To</th>
+            <th style="width:62px;">Weight</th>
+           <!-- <th style="width:70px;">Path<br><font size="1">(show/hide)</font></th>-->
+            <th style="width:60px;">Save</th>
+            <th style="width:60px;">Delete</th>
+            <th style="width:20px;"></th>
+          </tr>
+        </table> 
+
+      </div>
+        <div style="position:relative;height:40px;bottom:10px;">
+          <!--<a id="clicktoadd" href="#">Click to Add</a>-->
+          <br><button style="position:absolute;right:32%;" id="save">Save</button> 
+          <button style="position:absolute;right:12%;" id="unsaved_delete">Delete</button> <br><br>
+
+        </div>
+
+      </div>
+    </div
+
+
+  </body>
+</html>
+
+<script>
+/******* Initialize variables ******/
+var newPath;
+var jsonObject = new Object();
+var unsaved_paths = new Object();
+var new_path_index=0;
+var new_path_id = 1;
+var db_paths = [];
+var new_paths = [];
+var from= "18";
+var to="508";
+var weight=200;
+var colValues =[];
+var dbValues =[];
+var database_table = $("#database-table");
+var unsaved_table = $("#unsaved-table");
+var button = $("#clicktoadd");
+var id = 0;
+var map;
+
+/******* Initialize Google Maps ******/
+function initialize() {
+
+  var mapOptions = {
+    center: new google.maps.LatLng(36.651790,-121.79734),
+        mapTypeControl: true,
+    mapTypeControlOptions: {
+    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+    position: google.maps.ControlPosition.TOP_LEFT
+    },
+    zoom: 16
+
+  };
+
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+    mapOptions);
+
+  var drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: null,//google.maps.drawing.OverlayType.MARKER,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.TOP_LEFT,
+      drawingModes: [
+        google.maps.drawing.OverlayType.POLYLINE, ]
+    },
+
+  });
+  drawingManager.setMap(map);
+
+  google.maps.event.addListener(drawingManager, 'polylinecomplete', function(line) {
+    newPath = new google.maps.Polyline({
+            path: line.getPath(),
+            strokeColor: '#FF0000', 
+            strokeOpacity: 1.0,
+            strokeWeight: 3
+          });
+
+    line.setMap(null);
+
+    //jsonObject.path = [{"from": from}, {"to" : to},{"weight": weight}];
+    //jsonObject.path_id = new_path_id;
+    //jsonObject.coordinates = newPath.getPath().getArray();
+
+    new_paths[new_path_index] = {"id": new_path_id, "path" : newPath};
+    //new_paths[new_path_index]["info"] = {"from": from, "to" : to, "weight": weight};
+    new_paths[new_path_index]["path"].setMap(map);
+
+    //alert(newPath.getPath().getArray().toString());
+
+    unsaved_table.append("<tr id='"+new_path_index+"'><td align='center'><input type='text' name='from' size='3' maxlength='3' style='width:34px;'> \
+                  </td><td align='center'><input type='text' name='to' size='3' maxlength='3' style='width:34px;'></td><td align='center'> \
+                  <input type='text' name='weight' size='3' maxlength='3' style='width:34px;'></td> \
+                  <td align='center'><input name='save' type='checkbox'></td> \
+                   <td align='center'><input name='unsaved_delete' type='checkbox'></td></tr>");
+
+    new_path_id++;
+    new_path_index++;
+
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+$('#json').click(function(){
+
+    $.ajax({
+      type: "POST",
+      url: "createjson.php",
+      data: {json : JSON.stringify(jsonObject)}, 
+      dataType: 'json',
+      //cache: false,
+      success: function(resp){
+          if(resp.success = true){
+          alert('Json script was successfully saved.');}
+      }
+  }); 
+
+});
+
+$('#save').click(function(){
+
+  var from;
+  var to;
+  var weight;
+  var save;
+  var del;
+  var index=0;
+  colValues;
+
+
+  $(".unsaved tr").each(function(i){
+
+    from = $('tr:nth-child('+(i+1)+')>td:nth-child(1)').find('input[name="from"]').val();
+    to = $('tr:nth-child('+(i+1)+')>td:nth-child(2)').find('input[name="to"]').val();
+    weight = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').find('input[name="weight"]').val();
+    save = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').find('input:checked').val();
+    //del = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').find('input:checked').val();
+
+    colValues[i] = {"id": index, "from": from, "to": to, "weight": weight, "save": save};//, "delete": del };
+    index++;
+
+  });
+
+  colValues.shift();
+
+  $(colValues).each (function(i){
+      if(colValues[i]['save'] == 'on'){
+
+        if(colValues[i]["id"] == new_paths[i]["id"]){
+          //alert(colValues[i]["id"] );
+          
+          jsonObject.path = [{"from": colValues[i]['from']}, {"to" : colValues[i]['to']},{"weight": colValues[i]['weight']}];
+          jsonObject.coordinates = new_paths[i]['path'].getPath().getArray();
+
+          $.ajax({
+              type: "POST",
+              url: "createpaths.php",
+              data: {json : JSON.stringify(jsonObject)}, 
+              dataType: 'json',
+              //cache: false,
+              success: function(resp){
+                  if(resp.success = true){
+                  alert('Paths were successfully saved.');}
+              }
+          }); 
+        }
+      }
+  });
+
+});
+
+
+$('#delete').click(function(){
+
+  var index=0;
+  dbValues.length=0;
+
+  $(".saved tr").each(function(i){
+
+    del = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').find('input:checked').val();
+
+    dbValues[i] = {"index": index, "delete": del };
+    index++;
+
+  });
+
+  dbValues.shift();
+
+  $(dbValues).each (function(i){
+      if(dbValues[i]['delete'] == 'on'){
+          
+          var row = dbValues[i]['index'];
+          jsonObject = new Object();
+          jsonObject.id = db_paths[i]['id'];
+
+          $.ajax({
+              type: "POST",
+              url: "deletepath.php",
+              data: {json : JSON.stringify(jsonObject)}, 
+              dataType: 'json',
+              //cache: false,
+              success: function(resp){
+                  if(resp.success ==true){
+                  alert('Paths were successfully deleted.');}
+                  $("#"+resp.id).remove();
+                  //loadPaths();
+ 
+              }
+          }); 
+        }
+  });
+
+});
+
+
+$('#unsaved_delete').click(function(){
+
+  var index=0;
+  colValues.length=0;
+
+  $(".unsaved tr").each(function(i){
+
+    del = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').find('input:checked').val();
+
+    dbValues[i] = {"index": index, "delete": del };
+    index++;
+
+  });
+
+  dbValues.shift();
+
+  $(dbValues).each (function(i){
+      if(dbValues[i]['delete'] == 'on'){
+          
+          var row = dbValues[i]['index'];
+          jsonObject = new Object();
+          jsonObject.id = db_paths[i]['id'];
+
+          $.ajax({
+              type: "POST",
+              url: "deletepath.php",
+              data: {json : JSON.stringify(jsonObject)}, 
+              dataType: 'json',
+              //cache: false,
+              success: function(resp){
+                  if(resp.success ==true){
+                  alert('Paths were successfully deleted.');}
+                  $("#"+resp.id).remove();
+                  //loadPaths();
+ 
+              }
+          }); 
+        }
+  });
+
+});
+
+
+$(document).ready(function() {
+  //loadPaths();
+
+    // There's a bug for when also adding show/hide to in progress paths
+    // They won't show and hide unless the all the show/hide textboxes of the other table
+    // are unselected. 
+    // TOTO: FIND BETTER METHOD OF TRAVERSING TABLE CELLS 
+    // Show/Hide unsaved paths
+    /*
+    $('.unsaved').change(function() {
+
+      var from;
+      var to;
+      var weight;
+      var show;
+      var save;
+      var index=0;
+      colValues.length = 0;
+       //alert(colValues.toSource());
+
+      $(".unsaved tr").each(function(i){
+
+        from = $('tr:nth-child('+(i+1)+')>td:nth-child(1)').find('input[name="from"]').val();
+        to = $('tr:nth-child('+(i+1)+')>td:nth-child(2)').find('input[name="to"]').val();
+        weight = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').find('input[name="weight"]').val();
+        show = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').find('input:checked').val();
+        save = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').find('input:checked').val();
+
+        //alert($('tr:nth-child('+(i+1)+')>td:nth-child(4)').find('input:checked').val());
+
+        colValues[i] = {"id": index, "from": from, "to": to, "weight": weight, "show": show, "save": save };
+        index++;
+
+
+
+      });
+
+      colValues.shift();
+      //colValues.shift();
+      alert(colValues.toSource());
+     // alert(colValues.length);
+
+      $(colValues).each (function(i){
+          if(colValues[i]['show'] == "on"){
+
+            if(colValues[i]["id"] == new_paths[i]["id"]){
+              //alert(colValues[i]["save"]);
+              new_paths[i]["path"].setMap(map);
+            }
+ 
+          }
+          else{
+              new_paths[i]["path"].setMap(null);
+          }
+      });
+      //alert(colValues.toSource());
+    });
+    */
+
+    // Show/Hide Saved paths from database
+    $('.saved').change(function() {
+
+      var db_from;
+      var db_to;
+      var db_weight;
+      var db_show;
+      var del;
+      var db_index=0;
+      dbValues.length=0;
+      
+
+      $(".saved tr").each(function(i){
+
+        db_from = $('tr:nth-child('+(i+1)+')>td:nth-child(1)').find('input[name="db_from"]').val();
+        db_to = $('tr:nth-child('+(i+1)+')>td:nth-child(2)').find('input[name="db_to"]').val();
+        db_weight = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').find('input[name="db_weight"]').val();
+        db_show = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').find('input:checked').val();
+        del = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').find('input:checked').val();
+
+        //alert($('tr:nth-child('+(i+1)+')>td:nth-child(4)').find('input:checked').val());
+
+        dbValues[i] = {"id": db_index, "from": db_from, "to": db_to, "weight": db_weight, "show": db_show, "delete": del};
+        db_index++;
+
+        //alert(dbValues.toSource());
+
+      });
+
+      dbValues.shift();
+      //alert(dbValues.toSource());
+      //alert(dbValues.length);
+
+      $(dbValues).each (function(i){
+          if(dbValues[i]['show'] == 'on'){
+
+            //if(dbValues[i]["id"] == db_paths[i]["id"]){
+              //alert(dbValues[i]["save"]);
+              db_paths[i]["path"].setMap(map);
+            //}
+ 
+          }
+          else{
+            //{
+              db_paths[i]["path"].setMap(null);
+            //}
+          }
+      });
+  });
+
+});
+
+
+
+$('.heading').click(function() {
+
+  var targetElement = $(this).next('.container');
+  var targetHeader = $(this).next('.header');
+
+    targetElement.slideToggle();
+  targetElement.siblings('.container').slideUp()
+  
+});
+
+window.onload = function() {
+  loadPaths();
+};
+// Load saved paths on to saved table
+function loadPaths()
+{
+  $.ajax({
+      type: "POST",
+      url: "loadpaths.php",
+      dataType: 'json',
+      //cache: false,
+      success: function(resp){
+
+          var size = resp.length;
+
+          for(var i=0;i<size;i++)
+          {
+
+            var newCoordinates = [];
+            var path_size = resp[i].path.length;
+            for(var a=0;a<path_size;a++)
+            {
+               newCoordinates[a] = new google.maps.LatLng(resp[i].path[a]['lat'], resp[i].path[a]['long']);
+            }
+
+            var newPath = new google.maps.Polyline({
+              path: newCoordinates,
+              geodesic: true,
+              strokeColor: '#88AAFF',
+              strokeOpacity: 1.0,
+              strokeWeight: 3
+            });
+
+            db_paths[i] = { "id":resp[i].id, "start": resp[i].start,"end": resp[i].end, 
+                            "weight" :resp[i].weight,"path": newPath};
+
+            db_paths[i]['path'].setMap(map);
+          }
+
+          for(var i=0;i<size;i++)
+          {
+          
+            database_table.append("<tr id='"+db_paths[i]['id']+"'><td align='center'><input type='text' name='db_from' size='3' maxlength='3' style='width:34px;'' value ="+db_paths[i]['start']+"> \
+                          </td><td align='center'><input type='text' name='db_to' size='3' maxlength='3' style='width:34px;' value ="+db_paths[i]['end']+"></td><td align='center'> \
+                          <input type='text' name='db_weight' size='3' maxlength='3' style='width:34px;'' value ="+db_paths[i]['weight']+"></td>   \
+                          <td align='center'><input name='db_show' type='checkbox' checked></td>    \
+                          <td align='center'><input name='delete' type='checkbox'></td></tr>");
+                          /*<input name='unhide' type='checkbox' checked>*/
+          
+          }
+      }
+  }); 
+
+}
+
+
+
+</script>
+

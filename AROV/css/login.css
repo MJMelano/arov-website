@@ -1,0 +1,125 @@
+/*************************************************
+ * Name: login.css
+ * Website: AROV CMS [Login Page]
+ * URL: http://hosting.otterlabs.edu/classes/melanomoises/arov/index.php
+ * Authors: Moises Melano, Joshua Frea, Juan Hernandez
+ * Email: mmelano@csumb.edu
+ *************************************************/
+ 
+/* Background Shadow Rules */
+#bgshadow {
+	 display: none;
+	 height: 100%;
+	 width: 100%;
+	 top: 0;
+	 left: 0;
+	 background: #000000;
+	 position: fixed;
+	 z-index:99999999; 
+}
+ 
+/* Login Box Rules */
+#loginbox {
+	display: none;
+	width: 300px;
+	background-color: #FFFFFF;
+	box-shadow: 0 0 10px #000;
+	-moz-box-shadow: 0 0 10px #000;
+	-webkit-box-shadow: 0 0 10px #000;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	top: 50%;
+	position: fixed;
+	z-index:9999999999;
+	margin-left: 300px;
+	padding: 10px 0;
+}
+
+#loginbox p {
+	color: #153455;	
+}
+
+/* Login Button Rules */
+.loginbutton {
+ 	background-color: #FFFFFF;
+  	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFFFFF), color-stop(100%, #CCCCCC));
+  	background-image: -webkit-linear-gradient(top, #FFFFFF, #CCCCCC);
+  	background-image: -moz-linear-gradient(top, #FFFFFF, #CCCCCC);
+  	background-image: -ms-linear-gradient(top, #FFFFFF, #CCCCCC);
+  	background-image: -o-linear-gradient(top, #FFFFFF, #CCCCCC);
+  	background-image: linear-gradient(top, #FFFFFF, #CCCCCC);
+	box-shadow: 2px 2px 3px #000000;
+	-moz-box-shadow: 2px 2px 3px #000000;
+	-webkit-box-shadow: 2px 2px 3px #000000;
+  	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+  	color: #153455;
+  	text-shadow: 0 -1px 0 #000000;
+  	min-width: 70px;
+  	width: auto;
+  	padding: 9px 25px;
+}
+
+input[type=submit] {
+	font-family:"Times New Roman", Times, serif;
+	font-size: 100%;
+	background-color: #FFFFFF;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFFFFF), color-stop(100%, #CCCCCC));
+  	background-image: -webkit-linear-gradient(top, #FFFFFF, #CCCCCC);
+  	background-image: -moz-linear-gradient(top, #FFFFFF, #CCCCCC);
+  	background-image: -ms-linear-gradient(top, #FFFFFF, #CCCCCC);
+  	background-image: -o-linear-gradient(top, #FFFFFF, #CCCCCC);
+  	background-image: linear-gradient(top, #FFFFFF, #CCCCCC);
+	box-shadow: 2px 2px 3px #000000;
+	-moz-box-shadow: 2px 2px 3px #000000;
+	-webkit-box-shadow: 2px 2px 3px #000000;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border: none;
+	color: #153455;
+	text-shadow: 0 -1px 0 #000000;
+	min-width: 70px;
+	padding: 9px 25px;
+	height: 35px;	
+}
+
+input[type=submit]:hover {
+	color: #F60;
+}
+
+/* Table Rules */
+form td {
+	height: 25px;
+	vertical-align: bottom;
+	padding-bottom: 10px;
+}
+
+form td p {
+	margin-right: 5px;
+}
+
+/* Input Rules */
+.textbox {
+	min-width: 100px; 
+	width: auto;
+	height: 12px;
+	padding: 5px; 
+	border: 1px solid #153455;
+	outline: none;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px; 
+	line-height: 20px;
+	vertical-align: text-bottom;
+}
+
+.textbox:focus {
+	outline: none;
+	border: 1px solid #153455;
+	box-shadow: 0 0 10px #F60;
+	-moz-box-shadow: 0 0 10px #F60;
+	-webkit-box-shadow: 0 0 10px #F60;
+}
